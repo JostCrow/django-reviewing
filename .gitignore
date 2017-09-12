@@ -27,3 +27,5 @@ coverage\.xml
 
 junit\.xml
 tests
+
+django_reviewing\.egg-info/
