@@ -1,7 +1,9 @@
-# django imports
 from django.contrib import admin
 
-# lfs imports
-from reviews.models import Review
+from .models import Review
 
-admin.site.register(Review)
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'score', )
+    list_filter = ('score', )

@@ -12,7 +12,7 @@ Install with pip
 pip install django-reviewing
 ```
 
-Add *'adyen'* to the installed apps
+Add *'django-reviewing'* to the installed apps
 
 ```python
 # settings.py
@@ -24,9 +24,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-Add the Adyen notifications urls (This is not required). These url will save all the notifications to the database. You need to make an implementation to handle the notifications
-
-```python
+<!-- ```python
 # urls.py
 
 urlpatterns = [
@@ -34,24 +32,21 @@ urlpatterns = [
     url(r'^reviews/', include('reviews.urls', namespace='reviews')),
     ...
 ]
-```
+``` -->
 
 ## Settings
 
 There are several settings which you can use within settings.py:
 
 ```python
-    REVIEWS_IS_MODERATED = False
-    # If True the admin has to publish a review manually. Otherwise a review is public right after it has been added.
-
-    REVIEWS_SHOW_PREVIEW = False
-    # If True a preview is displayed to the user before he can submit the review.
-
-    REVIEWS_IS_EMAIL_REQUIRED = False
-    # If True the e-mail field of the review is mandatory. (if the user is anonymous)
-
-    REVIEWS_IS_NAME_REQUIRED = False
-    # If True the name field of the review is mandatory. (if the user is anonymous)
+    # If you want different scores to show.
+    SCORE_CHOICES = (
+        (1, _(u"*")),
+        (2, _(u"**")),
+        (3, _(u"***")),
+        (4, _(u"****")),
+        (5, _(u"*****")),
+    )
 ```
 
 ## Usage
