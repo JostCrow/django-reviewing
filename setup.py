@@ -25,7 +25,7 @@ setup(
 
     # metadata
     description='Generic reviews for Django.',
-    # url='https://github.com/maykinmedia/djadyen',
+    # url='https://github.com/JostCrow/django-reviewing',
     author='Maykin Media, Jorik Kraaikamp',
     author_email='jorik.kraaikamp@maykinmedia.nl',
     classifiers=[
