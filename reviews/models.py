@@ -14,22 +14,23 @@ class Review(models.Model):
     """
     A ``Review`` consists on a comment and a rating.
     """
-    content_type = models.ForeignKey(ContentType, verbose_name=_(u"Content type"), related_name="content_type_set_for_%(class)s")
+    content_type = models.ForeignKey(
+        ContentType, verbose_name=_(u"Content type"), related_name="content_type_set_for_%(class)s",
+        null=True, blank=True)
     object_id = models.PositiveIntegerField(_(u"Content ID"), blank=True, null=True)
     content = GenericForeignKey(ct_field="content_type", fk_field="object_id")
 
-    active = models.BooleanField(_(u"Active"), default=False)
-    # if the user is authenticated we save the user otherwise the name and the
-    # email.
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u"User"), blank=True, null=True, related_name="%(class)s_comments")
+    # if the user is authenticated we save the user otherwise the name and the email.
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, verbose_name=_(u"User"), blank=True, null=True,
+        related_name="%(class)s_comments")
     user_name = models.CharField(_(u"Name"), max_length=50, blank=True)
     user_email = models.EmailField(_(u"E-mail"), blank=True)
 
+    active = models.BooleanField(_(u"Active"), default=False)
     comment = models.TextField(_(u"Comment"), blank=True)
     score = models.PositiveIntegerField(_(u"Score"), choices=SCORE_CHOICES)
-
     creation_date = models.DateTimeField(_(u"Creation date"), auto_now_add=True)
-    ip_address = models.GenericIPAddressField(_(u"IP address"), blank=True, null=True)
 
     objects = ActiveManager()
 

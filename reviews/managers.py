@@ -11,22 +11,18 @@ class ActiveMixin(object):
     def active(self):
         return self.filter(active=True)
 
+    def average(self, instance=None):
+        queryset = self
+        if instance:
+            queryset = queryset.filter(object_id=instance.id, content_type=ContentType.objects.get_for_model(instance))
+        avg_dict = queryset.aggregate(average=Avg('score'))
+        return avg_dict.get('average', 0)
+
 
 class ActiveQuerySet(ActiveMixin, QuerySet):
     pass
 
 
 class ActiveManager(ActiveMixin, Manager):
-    def get_query_set(self):
+    def get_queryset(self):
         return ActiveQuerySet(self.model, using=self._db)
-
-    def get_average(self, instance):
-        queryset = ActiveQuerySet(self.model, using=self._db)
-        queryset = queryset.filter(object_id=instance.id, content_type=ContentType.objects.get_for_model(instance))
-        avg_dict = queryset.aggregate(average=Avg('score'))
-        return avg_dict['average']
-
-    def average(self):
-        queryset = ActiveQuerySet(self.model, using=self._db)
-        avg_dict = queryset.aggregate(average=Avg('score'))
-        return avg_dict['average']
