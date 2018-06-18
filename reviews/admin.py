@@ -4,6 +4,7 @@ from django.contrib.contenttypes.admin import (
 )
 from django.utils.translation import gettext_lazy as _
 
+from .forms import ReviewAdminForm
 from .models import Review
 
 
@@ -11,6 +12,7 @@ from .models import Review
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'score', 'title', 'content', 'display_date', 'highlight')
     list_filter = ('score', 'highlight')
+    form = ReviewAdminForm
 
     fieldsets = (
         (None, {
@@ -25,9 +27,11 @@ class ReviewAdmin(admin.ModelAdmin):
 
 class ReviewTabularInlineAdmin(GenericTabularInline):
     model = Review
+    form = ReviewAdminForm
     extra = 1
 
 
 class ReviewStackedInlineAdmin(GenericStackedInline):
     model = Review
+    form = ReviewAdminForm
     extra = 1

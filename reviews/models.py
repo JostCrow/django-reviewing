@@ -40,7 +40,6 @@ class Review(models.Model):
 
     class Meta:
         ordering = ('-display_date', )
-        unique_together = ("highlight", "content_type", "object_id")
 
     def __str__(self):
         return "{} ({})".format(self.name, self.score)
