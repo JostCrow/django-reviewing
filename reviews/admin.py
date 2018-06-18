@@ -9,12 +9,12 @@ from .models import Review
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'score', 'content')
-    list_filter = ('score', )
+    list_display = ('name', 'email', 'score', 'title', 'content', 'display_date', 'highlight')
+    list_filter = ('score', 'highlight')
 
     fieldsets = (
         (None, {
-            'fields': ('active', 'user', 'user_name', 'user_email', 'score', 'comment', )
+            'fields': ('active', 'user', 'user_name', 'user_email', 'score', 'title', 'comment', 'display_date', 'highlight')
         }),
         ('Generic foreign key', {
             'description': _('The object connected to the review. This can be empty for a global review.'),
