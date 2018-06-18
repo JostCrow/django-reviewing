@@ -15,24 +15,32 @@ class Review(models.Model):
     A ``Review`` consists on a comment and a rating.
     """
     content_type = models.ForeignKey(
-        ContentType, verbose_name=_(u"Content type"), related_name="content_type_set_for_%(class)s",
+        ContentType, verbose_name=_("Content type"), related_name="content_type_set_for_%(class)s",
         null=True, blank=True)
-    object_id = models.PositiveIntegerField(_(u"Content ID"), blank=True, null=True)
+    object_id = models.PositiveIntegerField(_("Content ID"), blank=True, null=True)
     content = GenericForeignKey(ct_field="content_type", fk_field="object_id")
 
     # if the user is authenticated we save the user otherwise the name and the email.
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, verbose_name=_(u"User"), blank=True, null=True,
-        related_name="%(class)s_comments")
-    user_name = models.CharField(_(u"Name"), max_length=50, blank=True)
-    user_email = models.EmailField(_(u"E-mail"), blank=True)
+        settings.AUTH_USER_MODEL, verbose_name=_("User"), blank=True, null=True,
+        related_name="%(class)s_comments", on_delete=models.SET_NULL)
+    user_name = models.CharField(_("Name"), max_length=50, blank=True)
+    user_email = models.EmailField(_("E-mail"), blank=True)
 
-    active = models.BooleanField(_(u"Active"), default=False)
-    comment = models.TextField(_(u"Comment"), blank=True)
-    score = models.PositiveIntegerField(_(u"Score"), choices=SCORE_CHOICES)
-    creation_date = models.DateTimeField(_(u"Creation date"), auto_now_add=True)
+    active = models.BooleanField(_("Active"), default=False)
+    title = models.CharField(_("Title"), default='', max_length=300)
+    comment = models.TextField(_("Comment"), blank=True)
+    score = models.PositiveIntegerField(_("Score"), choices=SCORE_CHOICES)
+    display_date = models.DateTimeField(_("Display date"), null=True)
+    creation_date = models.DateTimeField(_("Creation date"), auto_now_add=True)
+    highlight = models.BooleanField(_("highlight"), default=False, blank=True)
+    source = models.TextField(_("Source"), default='', blank=True)
 
     objects = ActiveManager()
+
+    class Meta:
+        ordering = ('-display_date', )
+        unique_together = ("highlight", "content_type", "object_id")
 
     def __str__(self):
         return "{} ({})".format(self.name, self.score)
