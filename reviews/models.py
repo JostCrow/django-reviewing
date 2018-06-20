@@ -33,7 +33,6 @@ class Review(models.Model):
     score = models.PositiveIntegerField(_("Score"), choices=SCORE_CHOICES)
     display_date = models.DateTimeField(_("Display date"), null=True)
     creation_date = models.DateTimeField(_("Creation date"), auto_now_add=True)
-    highlight = models.BooleanField(_("highlight"), default=False, blank=True)
     source = models.TextField(_("Source"), default='', blank=True)
 
     objects = ActiveManager()
@@ -42,7 +41,7 @@ class Review(models.Model):
         ordering = ('-display_date', )
 
     def __str__(self):
-        return "{} ({})".format(self.name, self.score)
+        return "{} ({}) {}".format(self.name, self.score, self.content)
 
     @property
     def name(self):
