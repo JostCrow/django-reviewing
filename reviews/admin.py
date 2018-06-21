@@ -15,7 +15,7 @@ class ReviewAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('active', 'user', 'user_name', 'user_email', 'score', 'title', 'comment', 'display_date')
+            'fields': ('active', 'user', 'user_name', 'user_email', 'score', 'title', 'comment', 'display_date', 'source')
         }),
         ('Generic foreign key', {
             'description': _('The object connected to the review. This can be empty for a global review.'),
