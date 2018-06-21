@@ -10,7 +10,7 @@ from .models import Review
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'score', 'title', 'content', 'display_date')
+    list_display = ('score', 'name', 'email', 'title', 'content', 'display_date')
     list_filter = ('score', get_generic_foreign_key_filter('Content', 'content'))
 
     fieldsets = (
